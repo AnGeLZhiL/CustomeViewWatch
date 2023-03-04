@@ -9,8 +9,8 @@
 
     <com.example.customview.view.Watch
         android:id="@+id/watch"
-        android:layout_width="260dp"
-        android:layout_height="260dp"
+        android:layout_width="230dp"
+        android:layout_height="270dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
