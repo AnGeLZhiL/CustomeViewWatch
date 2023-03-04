@@ -74,7 +74,6 @@ public class Watch extends View {
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(0xff88ff99);
         canvas.drawCircle(0f, 0f, .05f, paint);
-
         canvas.restore();
     }
 }
