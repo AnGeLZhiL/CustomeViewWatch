@@ -66,6 +66,10 @@ public class Watch extends View {
             canvas.drawLine(x1, y1, x2, y2, paint);
         }
 
+        canvas.save();
+
+        canvas.rotate(360 - (float) 180 * (value / (float)maxValue));
+
         paint.setColor(0xffff8899);
         paint.setStrokeWidth(0.02f);
         canvas.drawLine(0.01f,0, 0, 1f, paint);
@@ -74,6 +78,7 @@ public class Watch extends View {
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(0xff88ff99);
         canvas.drawCircle(0f, 0f, .05f, paint);
+        canvas.restore();
         canvas.restore();
     }
 }
