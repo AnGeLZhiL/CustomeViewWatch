@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bgc1">#272727</color>
+    <color name="arrows1">#5155D3</color>
+    <color name="textColor1">#BABABA</color>
+    <color name="line1">#0E3AA6</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.customview.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -10,26 +11,50 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.example.customview.R;
+
 import java.util.Calendar;
 
 public class Watch extends View {
 
     private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Typeface typeface;
     Calendar calendar = Calendar.getInstance();
     int hour = calendar.get(Calendar.HOUR);
     int minute = calendar.get(Calendar.MINUTE);
     int second = calendar.get(Calendar.SECOND);
+    private int textColor = 0xff98ffb0;
+    private int lineColor = 0xff98ffb0;
+    private int arrowsColor = 0xff98ffb0;
+    private int centerColor = 0xff98ffb0;
+    private int backgroundColor = 0xff98ffb0;
+
 
     public Watch(Context context) {
         super(context);
+        init(context, null);
     }
 
     public Watch(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        init(context, attrs);
     }
 
     public Watch(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context, attrs);
+    }
+
+    private void init(Context context, AttributeSet attrs) {
+        if (attrs != null) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.WatchView);
+            textColor = a.getColor(R.styleable.WatchView_textColor, 0xffffffff);
+            lineColor = a.getColor(R.styleable.WatchView_lineColor, 0xff90a0ff);
+            arrowsColor = a.getColor(R.styleable.WatchView_arrowsColor, 0xff90a0ff);
+            backgroundColor = a.getColor(R.styleable.WatchView_backgroundColor, 0xff000000);
+            centerColor = a.getColor(R.styleable.WatchView_centerColor, 0xffffffff);
+            a.recycle();
+        }
     }
 
     @Override
@@ -39,8 +64,6 @@ public class Watch extends View {
         float width = getWidth();
         float height = getHeight();
         int maxValue = 60;
-        int color = 0xff98ffb0;
-        int textColor = 0xff90a0ff;
         int markRange = 5;
 
 
@@ -58,18 +81,14 @@ public class Watch extends View {
         canvas.scale(.5f * width, -1f * height);
 
 
-        paint.setColor(0x40ffffff);
+        paint.setColor(backgroundColor);
         paint.setStyle(Paint.Style.FILL);
 
-        canvas.drawCircle(0, 0, 1, paint);
+        canvas.drawCircle(0, 0, 1f, paint);
 
-        paint.setColor(0x20000000);
-
-        canvas.drawCircle(0, 0, 0.8f, paint);
-
-        paint.setColor(color);
+        paint.setColor(lineColor);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(0.005f);
+        paint.setStrokeWidth(0.01f);
 
         float scale = 0.9f;
         float longScale = 0.9f;
@@ -97,7 +116,7 @@ public class Watch extends View {
 
         canvas.translate(width / 2, 0);
 
-        paint.setTextSize(height / 10);
+        paint.setTextSize(height / 9);
         paint.setColor(textColor);
         paint.setStyle(Paint.Style.FILL);
 
@@ -119,7 +138,7 @@ public class Watch extends View {
         canvas.scale(.5f * width, -1f * height);
         canvas.rotate(360 - (float) 180 * (hour*10 / (float) maxValue));
 
-        paint.setColor(0xff55ff99);
+        paint.setColor(arrowsColor);
         paint.setStrokeWidth(0.05f);
         canvas.drawLine(0.02f, 0, 0, .6f, paint);
         canvas.drawLine(-0.02f, 0, 0, .6f, paint);
@@ -132,7 +151,7 @@ public class Watch extends View {
         canvas.scale(.5f * width, -1f * height);
         canvas.rotate(360 - (float) 180 * (minute*2 / (float) maxValue));
 
-        paint.setColor(0xff55ff99);
+        paint.setColor(arrowsColor);
         paint.setStrokeWidth(0.03f);
         canvas.drawLine(0.01f, 0, 0, .7f, paint);
         canvas.drawLine(-0.01f, 0, 0, .7f, paint);
@@ -145,14 +164,14 @@ public class Watch extends View {
         canvas.scale(.5f * width, -1f * height);
         canvas.rotate(360 - (float) 180 * (second*2 / (float) maxValue));
 
-        paint.setColor(0xff55ff99);
+        paint.setColor(arrowsColor);
         paint.setStrokeWidth(0.01f);
         canvas.drawLine(0.01f, 0, 0, .8f, paint);
         canvas.drawLine(0f, 0, 0, .8f, paint);
         canvas.drawLine(-0.01f, 0, 0, .8f, paint);
 
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(0xff88ff99);
+        paint.setColor(centerColor);
         canvas.drawCircle(0f, 0f, .05f, paint);
 
         canvas.restore();
